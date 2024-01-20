@@ -96,3 +96,81 @@ def choisir_offre(list_offres:dict):
             print(e,"\n")
     return list_offres[ref]
 
+def stat_offer_par_type(offers):
+    offer_count_by_type = {}
+
+    for offer in offers.values():
+        type_offre = offer.type_offre
+        offer_count_by_type[type_offre] = offer_count_by_type.get(type_offre, 0) + 1
+
+    total_offers = len(offers)
+
+    return offer_count_by_type, total_offers
+
+def stat_offer_par_type_et_period(offers, start_date, end_date):
+    offer_count_by_type = {}
+    total_offers = 0
+
+    for offer in offers.values():
+        if offer.Date_depart.is_between(start_date, end_date):
+            type_offre = offer.type_offre
+            offer_count_by_type[type_offre] = offer_count_by_type.get(type_offre, 0) + 1
+            total_offers += 1
+
+    return offer_count_by_type, total_offers
+
+def stat_reservation_par_etat(reservations, status_filter=None):
+    status_count = {}
+
+    for reservation in reservations.values():
+        if status_filter is None or reservation.Etat_Reservation.lower() == status_filter.lower():
+            status_count[reservation.Etat_Reservation] = status_count.get(reservation.Etat_Reservation, 0) + 1
+
+    return status_count
+
+def stat_reservation_confirme_par_filter(reservations, filter_type, filter_value, start_date=None, end_date=None):
+    confirmed_count = 0
+
+    for reservation in reservations.values():
+        if reservation.Etat_Reservation.lower() == 'confirmée':
+            if (start_date is None or reservation.Date_depart >= start_date) and \
+               (end_date is None or reservation.Date_depart <= end_date):
+                if filter_type == 'period':
+                    confirmed_count += 1
+                elif filter_type == 'destination' and reservation.Ref_Offre == filter_value:
+                    confirmed_count += 1
+                elif filter_type == 'client' and reservation.Nom == filter_value:
+                    confirmed_count += 1
+                elif filter_type == 'nationality' and reservation.Nationalite == filter_value:
+                    confirmed_count += 1
+
+    return confirmed_count
+
+def stat_total_revenue(reservations, offers):
+    total_revenue = 0
+
+    for reservation in reservations.values():
+        if reservation.Etat_Reservation.lower() == 'confirmée':
+            offer_ref = reservation.Ref_Offre
+            total_revenue += offers[offer_ref].prix
+
+    return total_revenue
+
+def stat_revenue_by_filter(reservations, offers, filter_type, filter_value, start_date=None, end_date=None):
+    revenue = 0
+
+    for reservation in reservations.values():
+        if reservation.Etat_Reservation.lower() == 'confirmée':
+            if (start_date is None or reservation.Date_depart >= start_date) and \
+               (end_date is None or reservation.Date_depart <= end_date):
+                offer_ref = reservation.Ref_Offre
+                if filter_type == 'period':
+                    revenue += offers[offer_ref].prix
+                elif filter_type == 'type' and offers[offer_ref].type_offre == filter_value:
+                    revenue += offers[offer_ref].prix
+                elif filter_type == 'destination' and offer_ref == filter_value:
+                    revenue += offers[offer_ref].prix
+                elif filter_type == 'nationality' and reservation.Nationalite == filter_value:
+                    revenue += offers[offer_ref].prix
+
+    return revenue
