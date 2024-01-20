@@ -10,6 +10,7 @@ menu_ajouter = ["Ajouter un voyage aller simple.","Ajouter un voyage aller et re
 menu_stats = ["S1.a Nbre d'offres par type et Nbre d'offres total.","S1.b Même question pour une période précise.","S2.a Nbre de réservations annulé, confirmé ou Global","S2.b Nbre de réservations confirmé par période, par destination, par client ou par nationalité","S3.a Chiffre d'affaires global : montant des gains.","S3.b Chiffre d'affaires global par période, par type, par destination et/ou par nationalité.","Retour au menu principal"]
 voyage = Voyage_complet()
 while True:
+    #mohamed amine boauli
     choix = menu(menu_principale)
     if choix == 1:
         choix = menu(menu_affichage)
@@ -36,6 +37,7 @@ while True:
     elif choix == 3:
         modifier_offre(list_offres)
     elif choix == 4:
+        #Hamza Laouar
         offre = choisir_offre(list_offres)
         reservation = Reservation()
         reservation.set_reservation(offre)
@@ -43,7 +45,7 @@ while True:
         reservation.sauvgarder(reservations)
         sauvgarder_modification(reservations,"Offre_de_voyage.txt")
     elif choix == 5:
-        
+            #mohamed amine boauli
         choix_stats = menu(menu_stats)
 
         if choix_stats == 1:

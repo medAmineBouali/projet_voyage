@@ -1,6 +1,7 @@
 from fontions import *
 
 class Date():
+        #mohamed amine boauli
     def __init__(self):
         self.jour = 0
         self.mois = 0 
@@ -46,8 +47,8 @@ class Date():
     
     def format_string(self):
         return f"{NbToStr(self.jour)}/{NbToStr(self.mois)}/{NbToStr(self.annee)}"
-
 class Offre():
+    #mohamed amine boauli
     def __init__(self):
         self.ref= 0
         self.v_depart = "ville_depart"
@@ -74,8 +75,8 @@ class Offre():
             file.write(str(data) + "\n")
 
     def sauvgarder(self,dic:dict):
+        #Hamza Laouar
         dic[self.ref] = self
-
     def info(self):
         return f"vole de ref {self.ref} de {self.v_depart} vers {self.v_arrive}\n"
     def block(self):
@@ -84,6 +85,7 @@ class Offre():
         self.statut = "Active"
 
 class Voyage_simple(Offre):
+    #mohamed amine boauli
     def __init__(self):
         super().__init__()
         self.d_depart = Date()
@@ -167,6 +169,7 @@ class Voyage_aller_retour(Voyage_simple):
         return f"{super().info()} avec retour le {self.d_retour.format_string()}\n"
 
 class Hebergement(Offre):
+    #Hamza Laouar
     def __init__(self):
         self.date_debut = Date()
         self.nombre_nuits = 0
@@ -220,6 +223,7 @@ class Voyage_complet(Voyage_aller_retour, Hebergement):
         return "Voyages Complet:\n" + "-"+Voyage_aller_retour.info(self) + "-"+Hebergement.info_h(self)
 
 class Reservation:
+    #Hamza Laouar
     def __init__(self, Ref_res="Ref_res", type_offre="type_offre", Ref_Offre="Ref_Offre",
                  Date_depart=None, Date_retour=None, Genre="Genre", Nom="Nom", Prenom="Prenom",
                  Nationalite="Nationalite", Num_Passeport=0, Etat_Reservation="en cours", Total_A_Payer=0):
@@ -280,15 +284,16 @@ class Reservation:
                     data[key] = value.format_string()
             file.write(str(data) + "\n")
     def confirmation(self):
+        #Hamza Laouar
         option = ["Confirmer.","Annuler.","Rendre globale."] 
         print("Voulez vous:")
         choix = menu(option)
         if choix == 1:
             self.Etat_Reservation = "confirme"
         elif choix == 2:
-            self.Etat_Reservation == "annule"
+            self.Etat_Reservation = "annule"
         elif choix == 3:
-            self.Etat_Reservation == "globale"
+            self.Etat_Reservation = "globale"
 
     def sauvgarder(self,dic:dict):
         dic[self.Ref_reservation] = self

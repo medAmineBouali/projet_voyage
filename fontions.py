@@ -28,6 +28,7 @@ def validation_Date(jour:int,mois:int,annee:int) -> None:
         raise ValueError("l'annee entre et invalide")
 
 def saisirElement(inf:int, sup:int, message=""):
+    #Hamza Laouar
     while True:
         try:
             element = int(input(message))
@@ -38,6 +39,7 @@ def saisirElement(inf:int, sup:int, message=""):
             print("Veuillez entrer un nombre entier.")
 
 def NbToStr(Numb:int):
+   #Hamza Laouar
    if Numb in range(10):
        return '0'+str(Numb)
    return str(Numb)
@@ -65,6 +67,7 @@ def input_type_duree():
     return l[choix - 1]
 
 def sauvgarder_modification(list_offres:dict,nom_fichier):
+    #Hamza Laouar
     with open(nom_fichier, 'w') as file:
             file.truncate(0)
     for offre in list_offres.values():
